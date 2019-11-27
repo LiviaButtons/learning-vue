@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Exercises 01</title>
+
+        <!-- development version, includes helpful console warnings -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+
+    <body>
+
+    <div id="app01">
+        <h1>{{ heading }}</h1>
+
+        <p v-bind:title="message">
+            This paragraph will show the date and time this page was loaded on hover: the "title" attribute is dynamically bound.
+        </p>
+
+        <p v-if="show">
+            Toggle the visibility of this paragraph by clicking the button below.
+        </p>
+
+        <button v-on:click="toggleContent">Toggle</button>
+        <!--also a possibility for simple functions: integrating directly as so -->
+        <!--<button v-on:click="show = !show">Click</button>-->
+
+
+        <h3>Todo-list for success</h3>
+        <p>Using a loop so we don't repeat ourselves.</p>
+        <ol>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+        </ol>
+    </div>
+
+    </body>
+
+    <script>
+        let app = new Vue({
+            el: '#app01',
+            data: {
+                heading: 'Hello world.',
+                message: 'This page was loaded on ' + new Date().toLocaleString(),
+                show: true,
+                todos: [
+                    { text: 'Learn Vue.js' },
+                    { text: '???' },
+                    { text: 'Profit' }
+                ]
+            },
+            methods: {
+                toggleContent: function () {
+                    this.show = !this.show;
+                }
+            }
+        })
+
+        app.todos.push({text: 'Buy an unicorn'});
+
+    </script>
+</html>
