@@ -24,10 +24,9 @@
             Toggle the visibility of this paragraph by clicking the button below.
         </p>
 
-        <button v-on:click="toggleContent">Toggle</button>
+        <button v-on:click="toggleVisibility">Toggle</button>
         <!--also a possibility for simple functions: integrating directly as so -->
         <!--<button v-on:click="show = !show">Click</button>-->
-
 
         <h3>Todo-list for success</h3>
         <p>Using a loop so we don't repeat ourselves.</p>
@@ -36,6 +35,28 @@
                 {{ todo.text }}
             </li>
         </ol>
+
+        <button v-on:click="reverseMessage">{{buttonText}}</button>
+
+        <div>
+            <input v-model="heading">
+        </div>
+    </div>
+
+    <div id="app02">
+        <h2>{{ heading }}</h2>
+        
+        <p>{{ message }}</p>
+
+        <ol>
+            <todo-item 
+                v-for="item in shoppingList" 
+                v-bind:todo="item" 
+                v-bind:key="item.id">
+
+            </todo-item>
+        </ol>
+
     </div>
 
     </body>
@@ -51,16 +72,41 @@
                     { text: 'Learn Vue.js' },
                     { text: '???' },
                     { text: 'Profit' }
-                ]
+                ],
+                buttonText: 'Click to reverse text'
             },
             methods: {
-                toggleContent: function () {
+                toggleVisibility: function () {
                     this.show = !this.show;
+                },
+                reverseMessage: function () {
+                    this.buttonText = this.buttonText.split( ' ' ).reverse().join( ' ' );
                 }
             }
         })
 
-        app.todos.push({text: 'Buy an unicorn'});
+        app.todos.push({ text: 'Buy an unicorn' });
+
+        Vue.component( 'todo-item', {
+            props: [ 'todo' ],
+            template: '<li>{{ todo.text }}</li>'
+        });
+
+        let componentApp = new Vue({
+            el: '#app02',
+            data: {
+                heading: 'Using components',
+                message: 'We\'ll now try some of the same exercises, but using components this time. E.g. the following list.',
+                shoppingList: [
+                    { id: 0, text: 'mangoes' },
+                    { id: 1, text: 'bananas' },
+                    { id: 2, text: 'raspberries' }
+                ]
+            }
+        })
+
+    
+        componentApp.shoppingList.push({ id: 3, text: 'carrots' });
 
     </script>
 </html>
